@@ -1,0 +1,263 @@
+
+
+/* ==============================
+   EMPLOYEE SECTION
+============================== */
+
+.employee-container {
+    min-height: 100vh;
+    padding: 60px 8%;
+    background: linear-gradient(135deg, #f4f7ff, #eef2ff);
+    font-family: "Segoe UI", sans-serif;
+}
+
+.employee-header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.header-tag {
+    display: inline-block;
+    padding: 8px 18px;
+    background: #dbeafe;
+    color: #2563eb;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.employee-header h1 {
+    font-size: 42px;
+    color: #172033;
+    margin-top: 20px;
+    font-weight: 800;
+}
+
+.employee-header p {
+    color: #64748b;
+    margin-top: 12px;
+    font-size: 16px;
+}
+
+
+/* ==============================
+   EMPLOYEE STATISTICS
+============================== */
+
+.employee-stats {
+    max-width: 300px;
+    padding: 22px 25px;
+    background: white;
+    border-radius: 18px;
+    margin-bottom: 35px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+}
+
+.employee-stats h3 {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.employee-stats h2 {
+    color: #2563eb;
+    font-size: 35px;
+    margin-top: 8px;
+}
+
+
+/* ==============================
+   EMPLOYEE GRID
+============================== */
+
+.employee-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+}
+
+
+/* ==============================
+   EMPLOYEE CARD
+============================== */
+
+.employee-card {
+    background: white;
+    padding: 28px;
+    border-radius: 22px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.employee-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #2563eb, #8b5cf6);
+}
+
+.employee-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(37, 99, 235, 0.13);
+    border-color: #bfdbfe;
+}
+
+
+/* ==============================
+   EMPLOYEE TOP
+============================== */
+
+.employee-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.employee-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.employee-id {
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* ==============================
+   EMPLOYEE DETAILS
+============================== */
+
+.employee-card h2 {
+    color: #172033;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.employee-role {
+    color: #64748b;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.employee-divider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 22px 0;
+}
+
+
+/* ==============================
+   EMPLOYEE SALARY
+============================== */
+
+.employee-salary span {
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.employee-salary h3 {
+    color: #2563eb;
+    font-size: 25px;
+    margin-top: 8px;
+    font-weight: 800;
+}
+
+
+/* ==============================
+   EMPLOYEE STATUS
+============================== */
+
+.employee-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 22px;
+    padding: 8px 12px;
+    background: #ecfdf5;
+    color: #059669;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.employee-status span {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+}
+
+
+/* ==============================
+   RESPONSIVE DESIGN
+============================== */
+
+@media (max-width: 1000px) {
+
+    .employee-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .register-container {
+        grid-template-columns: 1fr;
+    }
+
+    .register-info {
+        padding: 35px 25px;
+    }
+
+    .register-info h1 {
+        font-size: 30px;
+    }
+
+    .register-form {
+        padding: 35px 25px;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .employee-container {
+        padding: 40px 5%;
+    }
+
+    .employee-header h1 {
+        font-size: 29px;
+    }
+
+    .employee-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .employee-stats {
+        max-width: 100%;
+    }
+
+}
