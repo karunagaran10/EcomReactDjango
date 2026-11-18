@@ -6,11 +6,11 @@
     align-items: center;
     /* vertical centering */
     padding: 10px 40px;
-    background-color: #3d968c;
+    background-color: #ff4699;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(255, 244, 244, 0.2);
 }
 
 .logo-image img {
@@ -26,7 +26,7 @@
 }
 
 .menuitems a {
-    color: #ffee00;
+    color: #000000;
     text-decoration: none;
     font-size: 16px;
     font-weight: 500;
@@ -37,7 +37,7 @@
 
 .menuitems a:hover {
     color: #38bdf8;
-    border-bottom-color: #38bdf8;
+    border-bottom-color: #25bcfd;
 }
 
 /* Mobile: stack logo and menu */

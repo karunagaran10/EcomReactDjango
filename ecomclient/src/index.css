@@ -24,7 +24,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 60px 20px;
-    background: linear-gradient(135deg, #10172a, #172554, #312e81);
+    background: linear-gradient(135deg, #a002b5, #02fbef, #eeff00);
     font-family: Arial, sans-serif;
 }
 
@@ -33,7 +33,7 @@ body {
     max-width: 1050px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background: #fff;
+    background: #ffffff;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -41,7 +41,7 @@ body {
 
 .register-info {
     padding: 55px 40px;
-    background: linear-gradient(145deg, #2563eb, #4f46e5);
+    background: linear-gradient(145deg, #00a2ff, #37ddb4);
     color: white;
     display: flex;
     flex-direction: column;
@@ -79,7 +79,7 @@ body {
 }
 
 .register-form h2 {
-    color: #172554;
+    color: #003cff;
     font-size: 28px;
 }
 
@@ -97,7 +97,7 @@ body {
     display: block;
     font-size: 13px;
     font-weight: bold;
-    color: #334155;
+    color: #0054c9;
     margin-bottom: 8px;
 }
 
