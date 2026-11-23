@@ -1,8 +1,9 @@
 
 import React, { useState } from "react";
+import Api from "../../Api";
+
 
 function Register() {
-
   const [formData, setFormData] = useState({
     username: "",
     fullname: "",
@@ -12,6 +13,10 @@ function Register() {
     mobile: ""
   });
 
+  const [message, setMessage] = useState("");
+  const [uniqueId, setUniqueId] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   // Handle Input Change
   const handleChange = (e) => {
     setFormData({
@@ -20,25 +25,41 @@ function Register() {
     });
   };
 
-  // Form Validation
-  const handleSubmit = (e) => {
+  // Form Validation and Submit
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setMessage("");
+    setUniqueId("");
+
+    // Empty Validation
+    if (
+      !formData.username.trim() ||
+      !formData.fullname.trim() ||
+      !formData.email.trim() ||
+      !formData.password ||
+      !formData.confirmPassword ||
+      !formData.mobile.trim()
+    ) {
+      setMessage("Please fill in all fields!");
+      return;
+    }
+
     // Username Validation
-    if (!formData.username || !formData.fullname || !formData.email || !formData.password || !formData.confirmPassword || !formData.mobile) {
-      alert("Please fill in all fields!");
+    if (!/^[A-Za-z0-9_]{3,20}$/.test(formData.username)) {
+      setMessage("Username must be 3-20 characters (letters, numbers or underscore)!");
       return;
     }
 
     // Full Name Validation
     if (!/^[A-Za-z ]+$/.test(formData.fullname.trim())) {
-      alert("Enter a valid full name!");
+      setMessage("Enter a valid full name!");
       return;
     }
 
     // Email Validation
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      alert("Enter a valid email address!");
+      setMessage("Enter a valid email address!");
       return;
     }
 
@@ -47,7 +68,7 @@ function Register() {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
     if (!passwordPattern.test(formData.password)) {
-      alert(
+      setMessage(
         "Password must contain 8 characters, uppercase, lowercase, number and special character!"
       );
       return;
@@ -55,39 +76,56 @@ function Register() {
 
     // Confirm Password Validation
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      setMessage("Passwords do not match!");
       return;
     }
 
     // Mobile Validation
     if (!/^[6-9][0-9]{9}$/.test(formData.mobile)) {
-      alert("Enter a valid 10 digit mobile number!");
+      setMessage("Enter a valid 10 digit mobile number!");
       return;
     }
 
-    // Print Form Data in Console
-  console.log("Registration Details:");
-  console.log("Username:", formData.username);
-  console.log("Full Name:", formData.fullname);
-  console.log("Email:", formData.email);
-  console.log("Password:", formData.password);
-  console.log("Mobile:", formData.mobile);
+    setIsSubmitting(true);
 
-  console.log("Complete Form Data:", formData);
+    try {
+      const response = await Api.post("register/", formData);
 
-  alert("Registration Successful!");
-    // Registration Success
-    alert("Registration Successful!");
+      // Success Message
+      setMessage("Registration Successful!");
 
-    // Reset Form
-    setFormData({
-      username: "",
-      fullname: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      mobile: ""
-    });
+      // Unique ID from Django
+      setUniqueId(response.data.unique_id);
+
+      // Reset Form
+      setFormData({
+        username: "",
+        fullname: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        mobile: ""
+      });
+
+    } catch (error) {
+      const responseData = error.response?.data;
+
+      const firstFieldError =
+        responseData && typeof responseData === "object"
+          ? Object.values(responseData)
+              .flat()
+              .find((value) => typeof value === "string")
+          : null;
+
+      setMessage(
+        firstFieldError || "Registration failed. Please try again."
+      );
+
+      setUniqueId("");
+
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -95,6 +133,7 @@ function Register() {
 
       <div className="register-container">
 
+        {/* Left Information Section */}
         <div className="register-info">
 
           <span className="register-tag">
@@ -118,6 +157,7 @@ function Register() {
 
         </div>
 
+        {/* Right Register Form */}
         <div className="register-form">
 
           <h2>Register Now</h2>
@@ -125,6 +165,39 @@ function Register() {
           <p className="form-subtitle">
             Enter your details to create an account.
           </p>
+
+          {/* Success / Error Box */}
+          {message && (
+            <div
+              className={
+                uniqueId
+                  ? "success-box"
+                  : "error-box"
+              }
+              role="status"
+            >
+
+              {uniqueId ? (
+                <>
+                  <span className="success-icon">✓</span>
+
+                  <h3>Registration Successful!</h3>
+
+                  <p>
+                    Your account has been created successfully.
+                  </p>
+
+                  <div className="unique-id">
+                    <span>Your Unique Registration ID</span>
+                    <strong>{uniqueId}</strong>
+                  </div>
+                </>
+              ) : (
+                <p>{message}</p>
+              )}
+
+            </div>
+          )}
 
           <form onSubmit={handleSubmit}>
 
@@ -139,7 +212,6 @@ function Register() {
                 placeholder="Enter username"
                 value={formData.username}
                 onChange={handleChange}
-                // required
               />
             </div>
 
@@ -154,7 +226,6 @@ function Register() {
                 placeholder="Enter full name"
                 value={formData.fullname}
                 onChange={handleChange}
-                // required
               />
             </div>
 
@@ -169,7 +240,6 @@ function Register() {
                 placeholder="Enter email address"
                 value={formData.email}
                 onChange={handleChange}
-                // required
               />
             </div>
 
@@ -184,7 +254,6 @@ function Register() {
                 placeholder="Enter password"
                 value={formData.password}
                 onChange={handleChange}
-                // required
               />
             </div>
 
@@ -201,7 +270,6 @@ function Register() {
                 placeholder="Confirm password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                // required
               />
             </div>
 
@@ -217,12 +285,18 @@ function Register() {
                 value={formData.mobile}
                 onChange={handleChange}
                 maxLength="10"
-                // required
               />
             </div>
 
-            <button type="submit" className="register-btn">
-              Create Account →
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="register-btn"
+              disabled={isSubmitting}
+            >
+              {isSubmitting
+                ? "Creating Account..."
+                : "Create Account →"}
             </button>
 
           </form>
