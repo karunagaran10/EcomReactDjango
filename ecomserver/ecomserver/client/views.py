@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .serializers import RegisterSerializer
+from .models import Register
 
 
 # Home Page
@@ -98,6 +99,46 @@ def register_user(request):
             "message": "Registration Successful!",
             "unique_id": f"USER-{user.id:04d}"
         }, status=status.HTTP_201_CREATED)
+
+    return Response(
+        serializer.errors,
+        status=status.HTTP_400_BAD_REQUEST
+    )
+
+from .serializers import Registeruserdata
+@api_view(['GET'])
+def Registeruserdatas(request):
+    myUserdata = Register.objects.all()
+    myUserSerailizer = Registeruserdata(
+        myUserdata,
+        many = True
+    )
+    return Response(myUserSerailizer.data)
+
+
+@api_view(['PATCH', 'PUT', 'DELETE'])
+def register_detail(request, pk):
+    try:
+        user = Register.objects.get(pk=pk)
+    except Register.DoesNotExist:
+        return Response(
+            {"detail": "User not found."},
+            status=status.HTTP_404_NOT_FOUND
+        )
+
+    if request.method == 'DELETE':
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    serializer = RegisterSerializer(
+        user,
+        data=request.data,
+        partial=(request.method == 'PATCH')
+    )
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
 
     return Response(
         serializer.errors,
